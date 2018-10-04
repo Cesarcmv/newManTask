@@ -1,0 +1,758 @@
+{
+	"info": {
+		"_postman_id": "1aa6397a-fc0b-4948-a6f1-edee7dceb9ca",
+		"name": "todoist",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Projects",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1f67e5c7-0217-4d14-914a-866fd2bd1e5f",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Project Data\", () =>{",
+							"   it(\"Status code is 200\", () =>{",
+							"         response.should.have.status(200)",
+							"   });",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects"
+					]
+				},
+				"description": "Returns JSON-encoded array containing all user projects."
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6e9cab7b-3762-4029-b04a-47e0bd7fdd2f",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"pm.environment.set(\"projectId\", response.body.id);",
+							"",
+							"describe(\"Validate Project Data\", () =>{",
+							"   it(\"Status code is 200\", () =>{",
+							"         response.should.have.status(200)",
+							"   });",
+							"   it(\"State Name is Sinaloa\", () =>{",
+							"        expect(response.body.name).to.equals('Sinaloa');",
+							"   });",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6a76fc32-60ae-49b6-8397-dd9f24956022",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Sinaloa\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects"
+					]
+				},
+				"description": "Creates a new project and return its value in a JSON format."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Project By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "62731375-fa23-4ff5-9309-fcfe8d2dbda0",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Project Data\", () =>{",
+							"   it(\"Status code is 200\", () =>{",
+							"         response.should.have.status(200)",
+							"   });",
+							"   it(\"State Name is Sinaloa\", () =>{",
+							"        expect(response.body.name).to.equals('Sinaloa');",
+							"   });",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				},
+				"description": "Returns a JSON object containing a project object related to the given id."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Project By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5cf4b616-d131-42f3-87aa-000f6bc49869",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Project Data\", () =>{",
+							"   it(\"Status code is 204\", () =>{",
+							"         response.should.have.status(204)",
+							"   });",
+							"   it(\"Validate Response Body is Empty\", () =>{",
+							"        expect(response.body).to.equals('');",
+							"   });",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Sinalia1\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				},
+				"description": "Updates the project for the given id and returns HTTP status code 204 with an empty body."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Project By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1ef4d8cd-bb52-45ec-a4e6-67a417dc5b9f",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Project Data\", () =>{",
+							"   it(\"Status code is 204\", () =>{",
+							"         response.should.have.status(204)",
+							"   });",
+							"   it(\"Validate Response Body is Empty\", () =>{",
+							"        expect(response.body).to.equals('');",
+							"   });",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"Sinalia1\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/projects/{{projectId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"projects",
+						"{{projectId}}"
+					]
+				},
+				"description": "Deletes a project and returns an empty response."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Active Task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks"
+					]
+				},
+				"description": "Returns a JSON-encoded array containing all user active tasks."
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Task",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1fbf9fb1-5186-4832-b1c6-da39d1d583de",
+						"type": "text/javascript",
+						"exec": [
+							"var moment = require('moment')",
+							"pm.globals.set(\"timestamp\", moment().format(\"MM/DD/YYYY\"))"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e65a2884-cd01-4244-8cbe-aa100dcbcedc",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"pm.environment.set(\"taskId\", response.body.id);",
+							"",
+							"describe(\"Validate Project Data\", () =>{",
+							"   it(\"Status code is 200\", () =>{",
+							"         response.should.have.status(200)",
+							"   });",
+							"   it(\"Task Name is New Task Test\", () =>{",
+							"        expect(response.body.content).to.equals('New Task Test');",
+							"   });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": \"New Task Test\",\n    \"project_id\": 2196001058\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks"
+					]
+				},
+				"description": "Creates a new task and returns the JSON object according for it."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Task By Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1fbf9fb1-5186-4832-b1c6-da39d1d583de",
+						"type": "text/javascript",
+						"exec": [
+							"var moment = require('moment')",
+							"pm.globals.set(\"timestamp\", moment().format(\"MM/DD/YYYY\"))"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "5adfc428-033b-413c-b460-ee28c9f18929",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"pm.environment.set(\"taskId\", response.body.id);",
+							"",
+							"describe(\"Validate Project Data\", () =>{",
+							"   it(\"Status code is 200\", () =>{",
+							"         response.should.have.status(200)",
+							"   });",
+							"   it(\"Task Name is New Task Test\", () =>{",
+							"        expect(response.body.content).to.equals('New Task Test');",
+							"   });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": \"New Task Test Updated\",\n    \"project_id\": 2196001058\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				},
+				"description": "Returns a task by id."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task By Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1fbf9fb1-5186-4832-b1c6-da39d1d583de",
+						"type": "text/javascript",
+						"exec": [
+							"var moment = require('moment')",
+							"pm.globals.set(\"timestamp\", moment().format(\"MM/DD/YYYY\"))"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0c320f2d-6106-49fb-b9ba-19f51f952fa6",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Project Data\", () =>{",
+							"   it(\"Status code is 204\", () =>{",
+							"         response.should.have.status(204);",
+							"   });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"content\": \"New Task Test Updated\",\n    \"project_id\": 2196001058\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				},
+				"description": "Updates a task and returns an empty body with the HTTP status code 204.\n\nJSON body parameters\nParameter\tRequired\tDescription\ncontent\nString\nNo\tTask content.\nproject_id\nInteger\nNo\tTask project id (read-only).\nlabel_ids\nArray of Integers\nNo\tIds of labels associated with the task.\npriority\nInteger\nNo\tTask priority from 1 (normal) to 4 (urgent).\ndue_string\nString\nNo\tHuman defined task due date (ex.: “next Monday”, “Tomorrow”). Value is set using local (not UTC) time.\ndue_date\nString\nNo\tSpecific date in YYYY-MM-DD format relative to user’s timezone.\ndue_datetime\nString\nNo\tSpecific date and time in RFC3339 format in UTC.\ndue_lang\nString\nNo\t2-letter code specifying language in case due_string is not written in English.\nPlease note that only one of the due_* fields can be used at the same time (due_lang is a special case)."
+			},
+			"response": []
+		},
+		{
+			"name": "Close Task By Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c4003854-3025-45dd-aae0-665e5601dca2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "dae3e649-66de-4a54-993d-858617130d7a",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Project Data\", () =>{",
+							"   it(\"Status code is 204\", () =>{",
+							"         response.should.have.status(204);",
+							"   });",
+							"   it(\"Validate Response Body is Empty\", () =>{",
+							"        expect(response.body).to.equals('');",
+							"   });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks/{{taskId}}/close",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{taskId}}",
+						"close"
+					]
+				},
+				"description": "Closes a task and returns an empty body with a HTTP status code 204.\n\nThe command does exactly what official clients do when you close a task. Regular tasks are completed and moved to history, subtasks are checked (marked as done, but not moved to history), recurring tasks are moved forward (due date is updated)."
+			},
+			"response": []
+		},
+		{
+			"name": "Reopen A Task By Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c4003854-3025-45dd-aae0-665e5601dca2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "dae3e649-66de-4a54-993d-858617130d7a",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Project Data\", () =>{",
+							"   it(\"Status code is 204\", () =>{",
+							"         response.should.have.status(204);",
+							"   });",
+							"   it(\"Validate Response Body is Empty\", () =>{",
+							"        expect(response.body).to.equals('');",
+							"   });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks/{{taskId}}/reopen",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{taskId}}",
+						"reopen"
+					]
+				},
+				"description": "Reopens a task and returns an empty body with a HTTP status code 204.\n\nThis command reopens a previously closed task. Works both with checked tasks in the user’s workspace and tasks moved to history. The behaviour varies for different types of tasks (the command follows the behaviour of official clients when tasks are uncompleted or extracted from the history).\n\nRegular tasks are extracted from the history and added back to the user workspace as normal unchecked tasks (without their subtasks though).\nCompleted subtasks of a non-completed task are simply marked as uncompleted.\nSubtasks that were moved to history are added back to the workspace as first-level tasks.\nNon-completed recurring tasks are ignored."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete A Task By Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c4003854-3025-45dd-aae0-665e5601dca2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "dae3e649-66de-4a54-993d-858617130d7a",
+						"type": "text/javascript",
+						"exec": [
+							"eval(globals.postmanBDD);",
+							"",
+							"describe(\"Validate Project Data\", () =>{",
+							"   it(\"Status code is 204\", () =>{",
+							"         response.should.have.status(204);",
+							"   });",
+							"   it(\"Validate Response Body is Empty\", () =>{",
+							"        expect(response.body).to.equals('');",
+							"   });",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/API/v8/tasks/{{taskId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"API",
+						"v8",
+						"tasks",
+						"{{taskId}}"
+					]
+				},
+				"description": "Deletes a task and returns an empty body with a HTTP status 204."
+			},
+			"response": []
+		}
+	]
+}
